@@ -18,6 +18,7 @@ class RegisterPageState extends State<RegisterPage> {
     return Text('Register', style: Theme.of(context).textTheme.headline);
   }
 
+//user input criteria
   Widget _showUsernameInput() {
     return Padding(
         padding: EdgeInsets.only(top: 20.0),
@@ -31,6 +32,7 @@ class RegisterPageState extends State<RegisterPage> {
                 icon: Icon(Icons.face, color: Colors.grey))));
   }
 
+//Email input criteria
   Widget _showEmailInput() {
     return Padding(
         padding: EdgeInsets.only(top: 20.0),
@@ -44,6 +46,7 @@ class RegisterPageState extends State<RegisterPage> {
                 icon: Icon(Icons.mail, color: Colors.grey))));
   }
 
+//password input criteria
   Widget _showPasswordInput() {
     return Padding(
         padding: EdgeInsets.only(top: 20.0),
@@ -65,6 +68,7 @@ class RegisterPageState extends State<RegisterPage> {
                 icon: Icon(Icons.lock, color: Colors.grey))));
   }
 
+//form actions
   Widget _showFormActions() {
     return Padding(
         padding: EdgeInsets.only(top: 20.0),
@@ -91,6 +95,7 @@ class RegisterPageState extends State<RegisterPage> {
         ]));
   }
 
+//Submit button action
   void _submit() {
     final form = _formKey.currentState;
 
@@ -100,18 +105,26 @@ class RegisterPageState extends State<RegisterPage> {
     }
   }
 
+//provides and capture data of user while Registration
   void _registerUser() async {
     setState(() => _isSubmitting = true);
     http.Response response = await http.post(
         'http://localhost:1337/auth/local/register',
         body: {"username": _username, "email": _email, "password": _password});
     final responseData = json.decode(response.body);
-    setState(() => _isSubmitting = false);
-    _showSuccessSnack();
-    _redirectUser();
-    print(responseData);
+    if (response.statusCode == 200) {
+      setState(() => _isSubmitting = false);
+      _showSuccessSnack();
+      _redirectUser();
+      print(responseData);
+    } else {
+      setState(() => _isSubmitting = false);
+      final String errorMsg = responseData['message'];
+      _showErrorSnack(errorMsg);
+    }
   }
 
+//Registration success
   void _showSuccessSnack() {
     final snackbar = SnackBar(
         content: Text('User $_username successfully created!',
@@ -120,6 +133,15 @@ class RegisterPageState extends State<RegisterPage> {
     _formKey.currentState.reset();
   }
 
+//Registration error
+  void _showErrorSnack(String errorMsg) {
+    final snackbar =
+        SnackBar(content: Text(errorMsg, style: TextStyle(color: Colors.red)));
+    _scaffoldKey.currentState.showSnackBar(snackbar);
+    throw Exception('Error registering: $errorMsg');
+  }
+
+//After successfully login redirects to next page
   void _redirectUser() {
     Future.delayed(Duration(seconds: 2), () {
       Navigator.pushReplacementNamed(context, '/products');
