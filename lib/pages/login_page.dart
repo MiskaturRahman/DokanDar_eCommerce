@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -91,11 +91,14 @@ class LoginPageState extends State<LoginPage> {
   //provides and capture data of user while Registration
   void _registerUser() async {
     setState(() => _isSubmitting = true);
+
     http.Response response = await http.post('http://localhost:1337/auth/local',
         body: {"identifier": _email, "password": _password});
     final responseData = json.decode(response.body);
+
     if (response.statusCode == 200) {
       setState(() => _isSubmitting = false);
+      _storeUserData(responseData);
       _showSuccessSnack();
       _redirectUser();
       print(responseData);
@@ -104,6 +107,14 @@ class LoginPageState extends State<LoginPage> {
       final String errorMsg = responseData['message'];
       _showErrorSnack(errorMsg);
     }
+  }
+
+//stores added user data
+  void _storeUserData(responseData) async {
+    final prefs = await SharedPreferences.getInstance();
+    Map<String, dynamic> user = responseData['user'];
+    user.putIfAbsent('jwt', () => responseData['jwt']);
+    prefs.setString('user', json.encode(user));
   }
 
 //Registration success

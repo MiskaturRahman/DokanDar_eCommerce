@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -114,6 +115,7 @@ class RegisterPageState extends State<RegisterPage> {
     final responseData = json.decode(response.body);
     if (response.statusCode == 200) {
       setState(() => _isSubmitting = false);
+      _storeUserData(responseData);
       _showSuccessSnack();
       _redirectUser();
       print(responseData);
@@ -139,6 +141,14 @@ class RegisterPageState extends State<RegisterPage> {
         SnackBar(content: Text(errorMsg, style: TextStyle(color: Colors.red)));
     _scaffoldKey.currentState.showSnackBar(snackbar);
     throw Exception('Error registering: $errorMsg');
+  }
+
+//shared preferences , stores data of previously logged in users
+  void _storeUserData(responseData) async {
+    final prefs = await SharedPreferences.getInstance();
+    Map<String, dynamic> user = responseData['user'];
+    user.putIfAbsent('jwt', () => responseData['jwt']);
+    prefs.setString('user', json.encode(user));
   }
 
 //After successfully login redirects to next page
