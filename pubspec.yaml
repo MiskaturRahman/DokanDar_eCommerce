@@ -20,7 +20,7 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^0.12.2
-  shared_preferences: 0.5.1+2
+  shared_preferences: ^0.5.12+4
   redux: ^4.0.0+3
   redux_thunk: ^0.3.0
   flutter_redux: ^0.7.0

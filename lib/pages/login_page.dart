@@ -16,6 +16,7 @@ class LoginPageState extends State<LoginPage> {
   String _email, _password;
 
   Widget _showTitle() {
+    // ignore: deprecated_member_use
     return Text('Login', style: Theme.of(context).textTheme.headline);
   }
 
@@ -65,6 +66,7 @@ class LoginPageState extends State<LoginPage> {
                   child: Text('Submit',
                       style: Theme.of(context)
                           .textTheme
+                          // ignore: deprecated_member_use
                           .body1
                           .copyWith(color: Colors.black)),
                   elevation: 8.0,
@@ -89,6 +91,8 @@ class LoginPageState extends State<LoginPage> {
   }
 
   //provides and capture data of user while Registration
+  // ignore: unused_element
+  // ignore: unused_element
   void _registerUser() async {
     setState(() => _isSubmitting = true);
 
@@ -122,6 +126,7 @@ class LoginPageState extends State<LoginPage> {
     final snackbar = SnackBar(
         content: Text('User successfully logged In!',
             style: TextStyle(color: Colors.green)));
+    // ignore: deprecated_member_use
     _scaffoldKey.currentState.showSnackBar(snackbar);
     _formKey.currentState.reset();
   }
@@ -130,6 +135,7 @@ class LoginPageState extends State<LoginPage> {
   void _showErrorSnack(String errorMsg) {
     final snackbar =
         SnackBar(content: Text(errorMsg, style: TextStyle(color: Colors.red)));
+    // ignore: deprecated_member_use
     _scaffoldKey.currentState.showSnackBar(snackbar);
     throw Exception('Error logging in : $errorMsg');
   }

@@ -16,6 +16,7 @@ class RegisterPageState extends State<RegisterPage> {
   String _username, _email, _password;
 
   Widget _showTitle() {
+    // ignore: deprecated_member_use
     return Text('Register', style: Theme.of(context).textTheme.headline);
   }
 
@@ -82,6 +83,7 @@ class RegisterPageState extends State<RegisterPage> {
                   child: Text('Submit',
                       style: Theme.of(context)
                           .textTheme
+                          // ignore: deprecated_member_use
                           .body1
                           .copyWith(color: Colors.black)),
                   elevation: 8.0,
@@ -131,6 +133,7 @@ class RegisterPageState extends State<RegisterPage> {
     final snackbar = SnackBar(
         content: Text('User $_username successfully created!',
             style: TextStyle(color: Colors.green)));
+    // ignore: deprecated_member_use
     _scaffoldKey.currentState.showSnackBar(snackbar);
     _formKey.currentState.reset();
   }
@@ -139,6 +142,7 @@ class RegisterPageState extends State<RegisterPage> {
   void _showErrorSnack(String errorMsg) {
     final snackbar =
         SnackBar(content: Text(errorMsg, style: TextStyle(color: Colors.red)));
+    // ignore: deprecated_member_use
     _scaffoldKey.currentState.showSnackBar(snackbar);
     throw Exception('Error registering: $errorMsg');
   }
