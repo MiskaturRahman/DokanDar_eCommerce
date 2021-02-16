@@ -1,7 +1,8 @@
 import 'package:flutter_ecommerce/models/app_state.dart';
+import 'package:flutter_ecommerce/models/user.dart';
 import 'package:flutter_ecommerce/redux/actions.dart';
 
-AppState appReducer(state, action) {
+AppState appReducer(AppState state, dynamic action) {
   return AppState(user: userReducer(state.user, action), cardToken: ''
       // products: productsReducer(state.products, action),
       // cartProducts: cartProducts(state.cartProducts, action),
@@ -11,7 +12,7 @@ AppState appReducer(state, action) {
       );
 }
 
-userReducer(user, action) {
+User userReducer(User user, dynamic action) {
   if (action is GetUserAction) {
     return action.user;
   }
