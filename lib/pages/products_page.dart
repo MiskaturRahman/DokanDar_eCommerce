@@ -62,10 +62,34 @@ class ProductsPageState extends State<ProductsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: _appBar,
-        body: Container( 
+        body: Container(
             decoration: gradientBackground,
-            child: Column(children: [
-              Row(children: [Text('Products Page')])
-            ])));
+            child: StoreConnector<AppState, AppState>(
+                converter: (store) => store.state,
+                builder: (_, state) {
+                  return Column(children: [
+                    Expanded(
+                        child: SafeArea(
+                            top: false,
+                            bottom: false,
+                            child: GridView.builder(
+                                itemCount: state.products.length,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2
+                                        //     orientation == Orientation.portrait
+                                        //         ? 2
+                                        //         : 3,
+                                        // crossAxisSpacing: 4.0,
+                                        // mainAxisSpacing: 4.0,
+                                        // childAspectRatio:
+                                        //     orientation == Orientation.portrait
+                                        //         ? 1.0
+                                        //         : 1.3
+                                        ),
+                                itemBuilder: (context, i) =>
+                                    Text(state.products[i]['name']))))
+                  ]);
+                })));
   }
 }

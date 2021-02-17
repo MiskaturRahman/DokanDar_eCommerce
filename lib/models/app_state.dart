@@ -6,7 +6,7 @@ import 'package:meta/meta.dart';
 @immutable
 class AppState {
   final dynamic user;
-  // final List<Product> products;
+  final List<dynamic> products;
   // final List<Product> cartProducts;
   // final List<dynamic> cards;
   // final List<Order> orders;
@@ -14,7 +14,7 @@ class AppState {
 
   AppState(
       {@required this.user,
-      // @required this.products,
+      @required this.products,
       // @required this.cartProducts,
       // @required this.orders,
       // @required this.cards,
@@ -24,7 +24,7 @@ class AppState {
     return AppState(
         user: null,
         // orders: [],
-        // products: [],
+        products: [],
         // cartProducts: [],
         // cards: [],
         cardToken: '');
