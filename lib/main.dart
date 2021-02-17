@@ -49,6 +49,7 @@ class MyApp extends StatelessWidget {
                         TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
                     // ignore: deprecated_member_use
                     // ignore: deprecated_member_usee
+                    // ignore: deprecated_member_use
                     body1: TextStyle(fontSize: 18.0))),
             home: RegisterPage()));
   }
