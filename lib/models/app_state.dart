@@ -1,32 +1,15 @@
-// import 'package:flutter_ecommerce/models/order.dart';
-// import 'package:flutter_ecommerce/models/product.dart';
-// import 'package:flutter_ecommerce/models/user.dart';
+import 'package:flutter_ecommerce/models/product.dart';
+import 'package:flutter_ecommerce/models/user.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class AppState {
-  final dynamic user;
-  final List<dynamic> products;
-  // final List<Product> cartProducts;
-  // final List<dynamic> cards;
-  // final List<Order> orders;
-  final String cardToken;
+  final User user;
+  final List<Product> products;
 
-  AppState(
-      {@required this.user,
-      @required this.products,
-      // @required this.cartProducts,
-      // @required this.orders,
-      // @required this.cards,
-      @required this.cardToken});
+  AppState({@required this.user, @required this.products});
 
   factory AppState.initial() {
-    return AppState(
-        user: null,
-        // orders: [],
-        products: [],
-        // cartProducts: [],
-        // cards: [],
-        cardToken: '');
+    return AppState(user: null, products: []);
   }
 }

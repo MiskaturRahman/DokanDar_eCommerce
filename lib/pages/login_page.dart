@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -16,7 +16,6 @@ class LoginPageState extends State<LoginPage> {
   String _email, _password;
 
   Widget _showTitle() {
-    // ignore: deprecated_member_use
     return Text('Login', style: Theme.of(context).textTheme.headline);
   }
 
@@ -66,7 +65,6 @@ class LoginPageState extends State<LoginPage> {
                   child: Text('Submit',
                       style: Theme.of(context)
                           .textTheme
-                          // ignore: deprecated_member_use
                           .body1
                           .copyWith(color: Colors.black)),
                   elevation: 8.0,
@@ -86,20 +84,15 @@ class LoginPageState extends State<LoginPage> {
 
     if (form.validate()) {
       form.save();
-      _redirectUser();
+      _registerUser();
     }
   }
 
-  //provides and capture data of user while Registration
-  // ignore: unused_element
-  // ignore: unused_element
   void _registerUser() async {
     setState(() => _isSubmitting = true);
-
     http.Response response = await http.post('http://localhost:1337/auth/local',
         body: {"identifier": _email, "password": _password});
     final responseData = json.decode(response.body);
-
     if (response.statusCode == 200) {
       setState(() => _isSubmitting = false);
       _storeUserData(responseData);
@@ -113,7 +106,6 @@ class LoginPageState extends State<LoginPage> {
     }
   }
 
-//stores added user data
   void _storeUserData(responseData) async {
     final prefs = await SharedPreferences.getInstance();
     Map<String, dynamic> user = responseData['user'];
@@ -121,26 +113,21 @@ class LoginPageState extends State<LoginPage> {
     prefs.setString('user', json.encode(user));
   }
 
-//Registration success
   void _showSuccessSnack() {
     final snackbar = SnackBar(
-        content: Text('User successfully logged In!',
+        content: Text('User successfully logged in!',
             style: TextStyle(color: Colors.green)));
-    // ignore: deprecated_member_use
     _scaffoldKey.currentState.showSnackBar(snackbar);
     _formKey.currentState.reset();
   }
 
-//Registration error
   void _showErrorSnack(String errorMsg) {
     final snackbar =
         SnackBar(content: Text(errorMsg, style: TextStyle(color: Colors.red)));
-    // ignore: deprecated_member_use
     _scaffoldKey.currentState.showSnackBar(snackbar);
-    throw Exception('Error logging in : $errorMsg');
+    throw Exception('Error logging in: $errorMsg');
   }
 
-//After successfully login redirects to next page
   void _redirectUser() {
     Future.delayed(Duration(seconds: 2), () {
       Navigator.pushReplacementNamed(context, '/products');

@@ -16,11 +16,9 @@ class RegisterPageState extends State<RegisterPage> {
   String _username, _email, _password;
 
   Widget _showTitle() {
-    // ignore: deprecated_member_use
     return Text('Register', style: Theme.of(context).textTheme.headline);
   }
 
-//user input criteria
   Widget _showUsernameInput() {
     return Padding(
         padding: EdgeInsets.only(top: 20.0),
@@ -34,7 +32,6 @@ class RegisterPageState extends State<RegisterPage> {
                 icon: Icon(Icons.face, color: Colors.grey))));
   }
 
-//Email input criteria
   Widget _showEmailInput() {
     return Padding(
         padding: EdgeInsets.only(top: 20.0),
@@ -48,7 +45,6 @@ class RegisterPageState extends State<RegisterPage> {
                 icon: Icon(Icons.mail, color: Colors.grey))));
   }
 
-//password input criteria
   Widget _showPasswordInput() {
     return Padding(
         padding: EdgeInsets.only(top: 20.0),
@@ -70,7 +66,6 @@ class RegisterPageState extends State<RegisterPage> {
                 icon: Icon(Icons.lock, color: Colors.grey))));
   }
 
-//form actions
   Widget _showFormActions() {
     return Padding(
         padding: EdgeInsets.only(top: 20.0),
@@ -83,7 +78,6 @@ class RegisterPageState extends State<RegisterPage> {
                   child: Text('Submit',
                       style: Theme.of(context)
                           .textTheme
-                          // ignore: deprecated_member_use
                           .body1
                           .copyWith(color: Colors.black)),
                   elevation: 8.0,
@@ -98,7 +92,6 @@ class RegisterPageState extends State<RegisterPage> {
         ]));
   }
 
-//Submit button action
   void _submit() {
     final form = _formKey.currentState;
 
@@ -108,7 +101,6 @@ class RegisterPageState extends State<RegisterPage> {
     }
   }
 
-//provides and capture data of user while Registration
   void _registerUser() async {
     setState(() => _isSubmitting = true);
     http.Response response = await http.post(
@@ -128,26 +120,6 @@ class RegisterPageState extends State<RegisterPage> {
     }
   }
 
-//Registration success
-  void _showSuccessSnack() {
-    final snackbar = SnackBar(
-        content: Text('User $_username successfully created!',
-            style: TextStyle(color: Colors.green)));
-    // ignore: deprecated_member_use
-    _scaffoldKey.currentState.showSnackBar(snackbar);
-    _formKey.currentState.reset();
-  }
-
-//Registration error
-  void _showErrorSnack(String errorMsg) {
-    final snackbar =
-        SnackBar(content: Text(errorMsg, style: TextStyle(color: Colors.red)));
-    // ignore: deprecated_member_use
-    _scaffoldKey.currentState.showSnackBar(snackbar);
-    throw Exception('Error registering: $errorMsg');
-  }
-
-//shared preferences , stores data of previously logged in users
   void _storeUserData(responseData) async {
     final prefs = await SharedPreferences.getInstance();
     Map<String, dynamic> user = responseData['user'];
@@ -155,7 +127,21 @@ class RegisterPageState extends State<RegisterPage> {
     prefs.setString('user', json.encode(user));
   }
 
-//After successfully login redirects to next page
+  void _showSuccessSnack() {
+    final snackbar = SnackBar(
+        content: Text('User $_username successfully created!',
+            style: TextStyle(color: Colors.green)));
+    _scaffoldKey.currentState.showSnackBar(snackbar);
+    _formKey.currentState.reset();
+  }
+
+  void _showErrorSnack(String errorMsg) {
+    final snackbar =
+        SnackBar(content: Text(errorMsg, style: TextStyle(color: Colors.red)));
+    _scaffoldKey.currentState.showSnackBar(snackbar);
+    throw Exception('Error registering: $errorMsg');
+  }
+
   void _redirectUser() {
     Future.delayed(Duration(seconds: 2), () {
       Navigator.pushReplacementNamed(context, '/products');

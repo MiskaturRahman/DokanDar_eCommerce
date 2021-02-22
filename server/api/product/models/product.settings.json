@@ -14,9 +14,9 @@
       "required": false
     },
     "description": {
-      "type": "string"
+      "type": "text"
     },
-    "Refill": {
+    "Price": {
       "type": "decimal"
     },
     "picture": {
@@ -34,9 +34,6 @@
       "plugin": "users-permissions",
       "model": "user",
       "via": "products"
-    },
-    "Cylinder": {
-      "type": "decimal"
     }
   }
 }
